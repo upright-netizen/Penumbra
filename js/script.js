@@ -54,8 +54,6 @@
       // Get initial values
       depth = depth_elem.val();
       color = color_elem.val();
-      // x = direction[ direction_elem.filter(':checked').val() ].x;
-      // y = direction[ direction_elem.filter(':checked').val() ].y;
       x = direction[ direction_elem.val() ].x;
       y = direction[ direction_elem.val() ].y;
       fontFamily = fontFamily_elem.val();
@@ -76,13 +74,6 @@
         color = color_elem.val();
         renderProperty();
       });
-
-      // direction_elem.on("click", function (e) {
-      //   var corner = direction[$(this).val()];
-      //   x = corner.x;
-      //   y = corner.y;
-      //   renderProperty();
-      // });
 
       direction_elem.on("change", function (e) {
         var corner = direction[$(this).val()];

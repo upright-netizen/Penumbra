@@ -32,6 +32,7 @@
         eventSwitch = $(doc),
 
         // elements
+        forms = $('#shadow-form, #preview-form'),
         depth_elem = $('#depth'),
         color_elem = $('#color'),
         direction_elem = $('#direction'),
@@ -61,6 +62,10 @@
       fontWeight = (boldInput_elem.is(":checked")) ? "bold" : "normal";
 
       /* events */
+      forms.on("submit", function (e) {
+        e.preventDefault();
+      });
+
       depth_elem.on("change", function (e) {
          console.log('change');
          depth = depth_elem.val();

@@ -38,6 +38,7 @@
         direction_elem = $('#direction'),
         fontFamily_elem = $('#font-family'),
         fontSize_elem = $('#font-size'),
+        fontSize_indicator = $('#font-size-indicator'),
         sampleText_elem = $('#font-text'),
         boldInput_elem = $('#bold'),
 
@@ -89,6 +90,7 @@
 
       fontSize_elem.on("change", function (e) {
         fontSize = fontSize_elem.val();
+        fontSize_indicator.val(fontSize);
         eventSwitch.trigger("updatePreview.text-shadow");
       });
 

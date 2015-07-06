@@ -71,7 +71,7 @@
          renderProperty();
       });
 
-      color_elem.on("blur", function (e) {
+      color_elem.on("input", function (e) {
         color = color_elem.val();
         renderProperty();
       });

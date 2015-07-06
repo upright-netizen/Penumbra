@@ -1,16 +1,13 @@
-/* Author: those jerks
-
-*/
-
-
+/*global console */
 (function(global, doc, $, undefined){
+  'use strict';
 
   var URN;
   if (!URN) {
     URN = {};
   }
 
-  URN.theShadowing = (function(options) {
+  URN.theShadowing = (function() {
 
   /* define */
 
@@ -18,16 +15,17 @@
     var depth,
         color,
         direction = {
-          "northwest" : { x : -1, y : -1 },
-          "northeast" : { x : 1, y : -1 },
-          "southeast" : { x : 1, y : 1 },
-          "southwest" : { x : -1, y : 1 }
+          'northwest' : { x : -1, y : -1 },
+          'northeast' : { x : 1, y : -1 },
+          'southeast' : { x : 1, y : 1 },
+          'southwest' : { x : -1, y : 1 }
         },
         x,
         y,
         textShadow,
         fontFamily,
         fontSize,
+        fontWeight,
         sampleText,
         eventSwitch = $(doc),
 
@@ -58,59 +56,59 @@
       x = direction[ direction_elem.val() ].x;
       y = direction[ direction_elem.val() ].y;
       fontFamily = fontFamily_elem.val();
-      fontWeight = (boldInput_elem.is(":checked")) ? "bold" : "normal";
+      fontWeight = (boldInput_elem.is(':checked')) ? 'bold' : 'normal';
 
       /* events */
-      forms.on("submit", function (e) {
+      forms.on('submit', function (e) {
         e.preventDefault();
       });
 
-      depth_elem.on("change", function (e) {
+      depth_elem.on('change', function () {
          console.log('change');
          depth = depth_elem.val();
          renderProperty();
       });
 
-      color_elem.on("input", function (e) {
+      color_elem.on('input', function () {
         color = color_elem.val();
         renderProperty();
       });
 
-      direction_elem.on("change", function (e) {
+      direction_elem.on('change', function () {
         var corner = direction[$(this).val()];
         x = corner.x;
         y = corner.y;
         renderProperty();
       });
 
-      fontFamily_elem.on("change", function (e) {
+      fontFamily_elem.on('change', function () {
         fontFamily = fontFamily_elem.val();
-        eventSwitch.trigger("updatePreview.text-shadow");
+        eventSwitch.trigger('updatePreview.text-shadow');
       });
 
-      fontSize_elem.on("change", function (e) {
+      fontSize_elem.on('change', function () {
         fontSize = fontSize_elem.val();
         fontSize_indicator.val(fontSize);
-        eventSwitch.trigger("updatePreview.text-shadow");
+        eventSwitch.trigger('updatePreview.text-shadow');
       });
 
-      sampleText_elem.on("blur", function (e) {
+      sampleText_elem.on('blur', function () {
         sampleText = sampleText_elem.val();
-        eventSwitch.trigger("updatePreview.text-shadow");
+        eventSwitch.trigger('updatePreview.text-shadow');
       });
 
-      boldInput_elem.on("click", function (e) {
-        fontWeight = (boldInput_elem.is(":checked")) ? "bold" : "normal";
-        eventSwitch.trigger("updatePreview.text-shadow");
+      boldInput_elem.on('click', function () {
+        fontWeight = (boldInput_elem.is(':checked')) ? 'bold' : 'normal';
+        eventSwitch.trigger('updatePreview.text-shadow');
       });
 
       /* dumb pub/sub */
       // update both
-      eventSwitch.on("update.text-shadow", updatePreview);
-      eventSwitch.on("update.text-shadow", updateCode);
+      eventSwitch.on('update.text-shadow', updatePreview);
+      eventSwitch.on('update.text-shadow', updateCode);
       // update one
-      eventSwitch.on("updatePreview.text-shadow", updatePreview);
-      eventSwitch.on("updateCode.text-shadow", updateCode);
+      eventSwitch.on('updatePreview.text-shadow', updatePreview);
+      eventSwitch.on('updateCode.text-shadow', updateCode);
 
       // gonna have to figure this out later.
       x = -1;
@@ -119,41 +117,41 @@
 
     renderProperty = function renderProperty () {
       // reset text shadow
-      textShadow = "";
+      textShadow = '';
 
       for(var i = 1; i <= depth; i += 1) {
-        textShadow += (x * i) + "px " + (y * i) + "px " + color;
+        textShadow += (x * i) + 'px ' + (y * i) + 'px ' + color;
         // need to coerce depth to be a number not a string, hence the ~~
-        if ( i !== ~~ depth ) textShadow += ", ";
+        if ( i !== ~~ depth ) textShadow += ', ';
       }
 
       // fire update event
-      eventSwitch.trigger("update.text-shadow");
+      eventSwitch.trigger('update.text-shadow');
     };
 
     updatePreview = function updatePreview () {
-      $("#preview").css({
-        "textShadow" : textShadow,
-        "fontFamily" : fontFamily,
-        "fontSize" : fontSize + "px",
-        "fontWeight" : fontWeight
+      $('#preview').css({
+        'textShadow' : textShadow,
+        'fontFamily' : fontFamily,
+        'fontSize' : fontSize + 'px',
+        'fontWeight' : fontWeight
       });
 
-      $("#preview").text(sampleText);
+      $('#preview').text(sampleText);
     };
 
     updateCode = function updateCode () {
-      $("#output").html("text-shadow : " + textShadow);
+      $('#output').html('text-shadow : ' + textShadow);
     };
 
     debug = function debug () {
       console.debug({
-         "depth" : depth,
-         "color" : color,
-         "text-shadow" : textShadow,
-         "font-family" : fontFamily,
-         "font-size" : fontSize,
-         "sample text" : sampleText
+         'depth' : depth,
+         'color' : color,
+         'text-shadow' : textShadow,
+         'font-family' : fontFamily,
+         'font-size' : fontSize,
+         'sample text' : sampleText
       });
     };
 
